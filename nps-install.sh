@@ -109,4 +109,28 @@ echo "$web_username"
 echo "密码："
 echo "$web_passwd"
 
+if [ -s "/etc/os-release" ];then
+    os_name=$(sed -n 's/PRETTY_NAME="\(.*\)"/\1/p' /etc/os-release)
+
+    if [ -n "$(echo ${os_name} | grep -Ei 'Debian|Ubuntu' )" ];then
+        iptables -I INPUT -p tcp --dport 8024 -j ACCEPT
+        iptables -I INPUT -p udp --dport 8024 -j ACCEPT
+        iptables -I INPUT -p tcp --dport $web_port -j ACCEPT
+        iptables-save
+        echo "iptables防火墙端口已开放|8824|$web_port"
+
+    elif [ -n "$(echo ${os_name} | grep -Ei 'CentOS')" ];then
+        firewall-cmd --zone=public --add-port=8024/tcp --permanent
+        firewall-cmd --zone=public --add-port=8024/udp --permanent
+        firewall-cmd --zone=public --add-port=$web_port/tcp --permanent
+        echo "firewalld防火墙端口已开放|8824|$web_port"
+    
+    else
+        echo "防火墙端口未开放 请手动开放端口8824|$web_port"
+    fi
+
+else
+    echo "防火墙类型检测失败 请手动开放端口8824|$web_port"
+fi
+
 exit 0
