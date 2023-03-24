@@ -108,3 +108,5 @@ echo "用户名："
 echo "$web_username"
 echo "密码："
 echo "$web_passwd"
+
+exit 0
