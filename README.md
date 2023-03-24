@@ -3,5 +3,5 @@ one key for install nps and npc
 For Server
 nps-install.sh
 
-For Cient
+For Cilent
 npc-install.sh
