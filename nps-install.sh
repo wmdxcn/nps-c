@@ -101,10 +101,10 @@ http_add_origin_header=false
 disconnect_timeout=60" >/etc/nps/conf/nps.conf
 ./nps start
 ps aux | grep nps
-ip="curl ip.sb"
+ip=$(curl ip.sb)
 echo "管理页面地址："
-echo "$ip : $web_port
+echo "$ip : $web_port"
 echo "用户名："
-echo "$ip : $web_username"
+echo "$web_username"
 echo "密码："
-echo "$ip : $web_passwd
+echo "$web_passwd"
